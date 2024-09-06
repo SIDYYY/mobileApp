@@ -1,8 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CarDetailPage({ route }) {
   const { car } = route.params; // Extract car data from CarPage
+  const navigation = useNavigation();
+
+  const handleComparePress = () => {
+    // Navigate to the car list page and pass the selected car to compare
+    navigation.navigate('CompareCar', { selectedCar: car });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -28,6 +35,12 @@ export default function CarDetailPage({ route }) {
         <Text style={styles.detailsText}>Price: {car.price}</Text>
         <Text style={styles.detailsTextDescription}>Description: {car.description}</Text>
       </View>
+
+      {/* Compare to Other Car button */}
+      <TouchableOpacity style={styles.compareButton} onPress={handleComparePress}>
+        <Text style={styles.compareButtonText}>Compare to Other Car</Text>
+      </TouchableOpacity>
+
     </ScrollView>
   );
 }
@@ -36,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4', // Light background color
+    backgroundColor: '#1c1c1c', // Dark background color
   },
   image: {
     width: '100%',
@@ -47,11 +60,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 40,
-    color: '#333', // Dark text color
+    marginBottom: 20,
+    color: '#fff', 
   },
   detailsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#292929',
     padding: 15,
     borderRadius: 10,
     shadowColor: '#000',
@@ -64,18 +77,30 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#333',
+    color: '#fff',
   },
   detailsText: {
     fontSize: 16,
-    color: '#555', // Medium gray text color
+    color: '#fff', 
     marginBottom: 5,
     lineHeight: 25,
   },
   detailsTextDescription: {
     fontSize: 16,
-    color: '#555', // Medium gray text color
+    color: '#fff', 
     marginVertical: 20,
-
+  },
+  compareButton: {
+    marginTop: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: 'black',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  compareButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   }
 });

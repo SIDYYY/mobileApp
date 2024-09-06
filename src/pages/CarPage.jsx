@@ -6,7 +6,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '1',
           name: 'Hatchback Zoom 2023',
-          image: 'https://example.com/car3.jpg',
+          image: 'https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/di8atywsviimlrrho9sz',
           year: '2023',
           model: 'Zoom',
           chassis: 'XYZ123456789',
@@ -19,7 +19,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '2',
           name: 'Electric Volt 2024',
-          image: 'https://example.com/car4.jpg',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-PIAICuoGKPo53bPzpm5d9ttvDsyhgC0sWQ&s',
           year: '2024',
           model: 'Volt',
           chassis: 'ABC987654321',
@@ -32,7 +32,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '3',
           name: 'SUV Xtreme 2022',
-          image: 'https://example.com/car5.jpg',
+          image: 'https://images.topgear.com.ph/topgear/images/2019/06/24/2019-foton-toplander-01-1561343280.jpg',
           year: '2022',
           model: 'Xtreme',
           chassis: 'LMN456789012',
@@ -45,7 +45,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '4',
           name: 'Sedan Luxe 2023',
-          image: 'https://example.com/car6.jpg',
+          image: 'https://media.ed.edmunds-media.com/infiniti/q50/2023/oem/2023_infiniti_q50_sedan_luxe_fq_oem_1_1600.jpg',
           year: '2023',
           model: 'Luxe',
           chassis: 'OPQ678901234',
@@ -58,7 +58,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '5',
           name: 'Sedan Pro 2024',
-          image: 'https://example.com/car7.jpg',
+          image: 'https://www.invygo.com/_next/image?url=https%3A%2F%2Fassets.invygo.com%2Fcar_model_images%2FModel%2520images%2Fchery%2Farrizo-6-pro%2F2024%2Fvibrant-photos%2F1.jpg&w=3840&q=75',
           year: '2024',
           model: 'Pro',
           chassis: 'STU123456789',
@@ -71,7 +71,7 @@ export default function CarsPage({ navigation }) {
         {
           id: '6',
           name: 'SUV Max 2023',
-          image: 'https://example.com/car8.jpg',
+          image: 'https://img-ik.cars.co.za/news-site-za/images/2023/04/mux-1.jpg?tr=w-1200,h-800',
           year: '2023',
           model: 'Max',
           chassis: 'VWX456789012',
@@ -109,13 +109,13 @@ export default function CarsPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#1c1c1c',
     padding: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2c3e50',
+    color: '#fff',
     marginVertical: 20,
     textAlign: 'center',
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   carCard: {
     width: '48%',
-    backgroundColor: '#fff',
+    backgroundColor: '#292929',
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
@@ -145,6 +145,6 @@ const styles = StyleSheet.create({
   carName: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2c3e50',
+    color: '#fff',
   },
 });
