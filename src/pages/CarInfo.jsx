@@ -7,7 +7,7 @@ export default function CarDetailPage({ route }) {
   const navigation = useNavigation();
 
   const handleComparePress = () => {
-    // Navigate to the car list page and pass the selected car to compare
+    // Navigate to the compare car page and pass the selected car to compare
     navigation.navigate('CompareCar', { selectedCar: car });
   };
 
@@ -40,6 +40,9 @@ export default function CarDetailPage({ route }) {
       <TouchableOpacity style={styles.compareButton} onPress={handleComparePress}>
         <Text style={styles.compareButtonText}>Compare to Other Car</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.Calculator} onPress={() => navigation.navigate('LoanCalculator')}>
+            <Text style={styles.calculatorText}>Car Loan Calculator</Text>
+      </TouchableOpacity>
 
     </ScrollView>
   );
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#1c1c1c', // Dark background color
+    backgroundColor: '#1c1c1c',
   },
   image: {
     width: '100%',
@@ -66,7 +69,9 @@ const styles = StyleSheet.create({
   detailsContainer: {
     backgroundColor: '#292929',
     padding: 15,
-    borderRadius: 10,
+    paddingHorizontal: 25,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff', 
     marginBottom: 5,
-    lineHeight: 25,
+    lineHeight: 21,
   },
   detailsTextDescription: {
     fontSize: 16,
@@ -91,16 +96,27 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   compareButton: {
-    marginTop: 10,
     paddingVertical: 15,
     paddingHorizontal: 20,
     backgroundColor: 'black',
-    borderRadius: 10,
     alignItems: 'center',
   },
   compareButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
+  Calculator: {
+    alignItems: 'center',
+    backgroundColor: '#928E85',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    },
+    calculatorText: {
+      fontSize: 16,
+      color: '#fff',
+      fontWeight: 'bold'
+    }
 });

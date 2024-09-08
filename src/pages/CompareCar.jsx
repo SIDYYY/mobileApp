@@ -103,7 +103,7 @@ export default function CompareCar() {
           <TouchableOpacity 
             key={car.id}
             style={styles.carCard}
-            onPress={() => handleSelectCar(car)} // Fix here: Add a function call with the car parameter
+            onPress={() => handleSelectCar(car)} //The chosen car to compare
           >
             <Image
               source={{ uri: car.image }}

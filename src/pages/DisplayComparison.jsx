@@ -11,7 +11,7 @@ export default function CarComparison() {
 
 
   const handleComparePress = () => {
-    // Navigate to the car list page and pass the selected car to compare
+    // Navigate to the comparecar list if user wanted to compare the first selected car to others
     navigation.navigate('CompareCar', { selectedCar: car1 });
   };
 
@@ -25,7 +25,7 @@ export default function CarComparison() {
         <Image source={{ uri: car2.image }} style={styles.carImage} />
       </View>
 
-      {/* Combined specifications in a single view */}
+      {/* Car specs comparison view*/}
       <View style={styles.specsContainer}>
         <View style={styles.specsColumn}>
           <Text style={styles.carName}>{car1.name}</Text>
@@ -51,6 +51,7 @@ export default function CarComparison() {
           <Text style={styles.specText}>Description: {car2.description}</Text>
         </View>
       </View>
+      {/* If user want to compare to other car button*/}
       <TouchableOpacity style={styles.compareButton} onPress={handleComparePress}>
         <Text style={styles.compareButtonText}>Compare to Other Car</Text>
       </TouchableOpacity>

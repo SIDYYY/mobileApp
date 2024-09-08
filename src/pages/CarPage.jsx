@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 export default function CarsPage({ navigation }) {
-    const cars = [
+    {/*car info*/} const cars = [
         {
           id: '1',
           name: 'Hatchback Zoom 2023',

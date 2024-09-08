@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 export default function DealerInfo({ route }) {
-  const { dealer } = route.params; // Assuming you're passing dealer details via navigation
+  const { dealer } = route.params; // Passing selected dealer for information
 
   
   return (
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   dealerDetails: {
     padding: 20,
     backgroundColor: '#292929',
+    paddingHorizontal: 30
   },
   dealerName: {
     fontSize: 24,
