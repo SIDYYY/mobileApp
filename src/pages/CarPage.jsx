@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 
 export default function CarsPage({ navigation }) {
     {/*car info*/} const cars = [
@@ -85,6 +85,7 @@ export default function CarsPage({ navigation }) {
       
 
   return (
+    
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Explore More Cars</Text>
       <View style={styles.carList}>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1c1c1c',
     padding: 20,
+    height: Dimensions.get('window')
   },
   title: {
     fontSize: 28,

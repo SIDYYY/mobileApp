@@ -1,58 +1,51 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from 'react-native-vector-icons';
 import HomePage from './src/pages/Home';
-import CarsPage from './src/pages/CarPage';
-import CarDetail from './src/pages/CarInfo';
-import CompareCar from './src/pages/CompareCar';
-import DisplayComparison from './src/pages/DisplayComparison';
-import Dealer from './src/pages/Dealer';
-import DealerDetail from './src/pages/DealerDetail';
-import CalculatorLoan from './src/pages/LoanCalculator';
-import LoadingScreen from './src/pages/LoadingScreen';
-import AboutUs from './src/pages/AboutUS';
-import { Ionicons } from 'react-native-vector-icons'; // For tab icons
+import Welcome from './src/pages/WelcomeScreen';
+import Compare from './src/pages/CompareCar';
+import List from './src/pages/GeneralList';
+import Model from './src/pages/Models';
+import Both from './src/pages/Compare';
+import Variant from './src/pages/Variant';
+import Details from './src/pages/CarDetails'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function TabIcon({ route, focused, color }) {
+  let iconName;
+  let backgroundColor = focused ? '#fff' : 'transparent'; // Background color for selected tab
+  
+  if (route.name === 'Home') {
+    iconName = focused ? 'home' : 'home-outline';
+  } else if (route.name === 'Compare Car') {
+    iconName = focused ? 'car' : 'car-outline';
+  }
+
+  return (
+    <View style={[styles.iconContainer, { backgroundColor }]}>
+      <Ionicons name={iconName} size={30} color={focused ? '#ECAE36' : '#888'} />
+    </View>
+  );
+}
 
 function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Cars') {
-            iconName = focused ? 'car' : 'car-outline';
-          } else if (route.name === 'Dealers') {
-            iconName = focused ? 'business' : 'business-outline';
-          } else if (route.name === 'Calculator') {
-            iconName = focused ? 'calculator' : 'calculator-outline';
-          }
-          else if (route.name === 'About Us') {
-            iconName = focused ? 'information-circle' : 'information-circle-outline'; 
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        "tabBarActiveTintColor": "#000",
-        "tabBarInactiveTintColor": "gray",
-        "tabBarStyle": [
-          {
-            "display": "flex",
-          },
-          null
-        ]
-      })} 
+        tabBarIcon: (props) => <TabIcon route={route} {...props} />,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#ECAE36',
+        tabBarInactiveTintColor: '#888',
+      })}
     >
-      {/* TABS MENU */}
-      <Tab.Screen name="Home" component={HomePage} options={{ headerShown: false}} />
-      <Tab.Screen name="About Us" component={AboutUs} options={{ title: 'About Us'}} />
-      <Tab.Screen name="Cars" component={CarsPage} options={{ title: 'Explore Cars' }} />
-      <Tab.Screen name="Dealers" component={Dealer} options={{ title: 'Authorized Dealers' }} />
-      <Tab.Screen name="Calculator" component={CalculatorLoan} options={{ title: 'Loan Calculator' }} />
+      <Tab.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
+      <Tab.Screen name="Compare Car" component={Compare} options={{ title: 'Compare Car' }} />
     </Tab.Navigator>
   );
 }
@@ -60,16 +53,35 @@ function HomeTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Loading">
-        <Stack.Screen name="Loading" component={LoadingScreen} options={{ headerShown: false }} />
-        
+      <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false }} />
-
-        <Stack.Screen name="CarInfo" component={CarDetail} options={{ title: 'Car Details' }} />
-        <Stack.Screen name="CompareCar" component={CompareCar} options={{ title: 'Explore other Cars' }} />
-        <Stack.Screen name="CarComparison" component={DisplayComparison} options={{ title: 'Comparison' }} />
-        <Stack.Screen name="DealerDetails" component={DealerDetail} options={{ title: 'Dealer Details' }} />
+        <Stack.Screen name="List" component={List} options={{title: 'Choose a Car Brand for Comparison'}}/>
+        <Stack.Screen name="Model" component={Model} options={{title: 'Choose a Car Model for Comparison'}}/>
+        <Stack.Screen name="Both" component={Both} options={{title: 'Choose Model for Comparison'}}/>
+        <Stack.Screen name="Variant" component={Variant} options={{title: 'Choose Model Variant for Comparison'}}/>
+        <Stack.Screen name="Details" component={Details} options={{title: 'Car Details'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: '#fff', // Background color of the tab bar
+    paddingVertical: 15,
+  },
+  tabBarLabel: {
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  iconContainer: {
+    width: 40, // Adjusted size
+    height: 40, // Adjusted size
+    borderRadius: 20, // Circle
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 5,
+    backgroundColor: '#ECAE36', // Default background color
+  },
+});

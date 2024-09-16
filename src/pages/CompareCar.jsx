@@ -1,161 +1,154 @@
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Alert, SafeAreaView, ScrollView, Image } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const cars = [
-    {
-      id: '1',
-      name: 'Hatchback Zoom 2023',
-      image: 'https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/di8atywsviimlrrho9sz',
-      year: '2023',
-      model: 'Zoom',
-      chassis: 'XYZ123456789',
-      engine: '1.5L Turbocharged Inline-4',
-      transmission: '6-Speed Automatic',
-      color: 'Red',
-      price: '$20,000',
-      description: 'The Hatchback Zoom 2023 offers excellent fuel efficiency and modern features such as advanced safety systems, a touchscreen infotainment system, and comfortable seating for five.',
-    },
-    {
-      id: '2',
-      name: 'Electric Volt 2024',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-PIAICuoGKPo53bPzpm5d9ttvDsyhgC0sWQ&s',
-      year: '2024',
-      model: 'Volt',
-      chassis: 'ABC987654321',
-      engine: 'Electric Motor, 150 kW',
-      transmission: 'Single-Speed Transmission',
-      color: 'Blue',
-      price: '$35,000',
-      description: 'The Electric Volt 2024 is a state-of-the-art electric vehicle featuring a long-range battery, fast charging capabilities, a minimalist interior design, and advanced driver-assistance systems.',
-    },
-    {
-      id: '3',
-      name: 'SUV Xtreme 2022',
-      image: 'https://images.topgear.com.ph/topgear/images/2019/06/24/2019-foton-toplander-01-1561343280.jpg',
-      year: '2022',
-      model: 'Xtreme',
-      chassis: 'LMN456789012',
-      engine: '3.0L V6',
-      transmission: '8-Speed Automatic',
-      color: 'Black',
-      price: '$45,000',
-      description: 'The SUV Xtreme 2022 combines rugged performance with luxury, offering off-road capabilities, spacious interior, premium materials, and advanced technology for an unparalleled driving experience.',
-    },
-    {
-      id: '4',
-      name: 'Sedan Luxe 2023',
-      image: 'https://media.ed.edmunds-media.com/infiniti/q50/2023/oem/2023_infiniti_q50_sedan_luxe_fq_oem_1_1600.jpg',
-      year: '2023',
-      model: 'Luxe',
-      chassis: 'OPQ678901234',
-      engine: '2.0L Inline-4',
-      transmission: '7-Speed Dual-Clutch',
-      color: 'Silver',
-      price: '$30,000',
-      description: 'The Sedan Luxe 2023 features a refined design with a focus on comfort and performance. It includes leather upholstery, a high-resolution display, advanced climate control, and a smooth, responsive driving experience.',
-    },
-    {
-      id: '5',
-      name: 'Sedan Pro 2024',
-      image: 'https://www.invygo.com/_next/image?url=https%3A%2F%2Fassets.invygo.com%2Fcar_model_images%2FModel%2520images%2Fchery%2Farrizo-6-pro%2F2024%2Fvibrant-photos%2F1.jpg&w=3840&q=75',
-      year: '2024',
-      model: 'Pro',
-      chassis: 'STU123456789',
-      engine: '2.5L Turbocharged Inline-4',
-      transmission: '8-Speed Automatic',
-      color: 'Gray',
-      price: '$33,000',
-      description: 'The Sedan Pro 2024 is designed for those seeking a blend of luxury and performance. It features a turbocharged engine, advanced driver assistance systems, a high-tech infotainment system, and a sleek, aerodynamic design.',
-    },
-    {
-      id: '6',
-      name: 'SUV Max 2023',
-      image: 'https://img-ik.cars.co.za/news-site-za/images/2023/04/mux-1.jpg?tr=w-1200,h-800',
-      year: '2023',
-      model: 'Max',
-      chassis: 'VWX456789012',
-      engine: '3.5L V6',
-      transmission: '9-Speed Automatic',
-      color: 'White',
-      price: '$50,000',
-      description: 'The SUV Max 2023 offers a spacious and comfortable interior with high-end features, including a panoramic sunroof, advanced safety technologies, and a powerful V6 engine that ensures a smooth driving experience on any terrain.',
-    },
-  ];
+export default function Compare({ route, navigation }) {
+    const [car1, setCar1] = useState(null);
+    const [car2, setCar2] = useState(null);
 
-export default function CompareCar() {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { selectedCar } = route.params; // Get the selected car for comparison
+    useEffect(() => {
+        const { car, slot } = route.params || {};
 
+        if (car && slot !== undefined) {
+            if (slot === 1) {
+                setCar1(car);
+            } else if (slot === 2) {
+                setCar2(car);
+            }
+        }
+    }, [route.params]);
 
-  const handleSelectCar = (car) => {
-    navigation.navigate('CarComparison', { car1: selectedCar, car2: car });
-  };
+    const handleSelectCar = (slot) => {
+        navigation.navigate('List', { slot }); // Pass only slot
+        console.log(slot)
+    };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Select a Car to Compare with {selectedCar?.name}</Text>
+    const handleComparePress = () => {
+        if (car1 && car2) {
+            navigation.navigate('Both', { car1, car2 });
+        } else {
+            Alert.alert('Error', 'Please select two cars to compare.');
+        }
+    };
 
-      {/* List of cars */}
-      <View style={styles.carList}>
-        {cars.map(car => (
-          <TouchableOpacity 
-            key={car.id}
-            style={styles.carCard}
-            onPress={() => handleSelectCar(car)} //The chosen car to compare
-          >
-            <Image
-              source={{ uri: car.image }}
-              style={styles.carImage}
-            />
-            <Text style={styles.carName}>{car.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
-  );
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView contentContainerStyle={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.headerTitle}>Car Comparison Tool</Text>
+                    <Text style={styles.headerText}>
+                        Not decided on a new vehicle yet? 
+                        You can compare 2 cars using our 
+                        dynamic car comparison tool.
+                    </Text>
+                </View>
+
+                <View style={styles.comparingBox}>
+                    <TouchableOpacity style={styles.box} onPress={() => handleSelectCar(1)}>
+                        <View style={styles.boxBorder}>
+                            {car1 ? (
+                                <Image source={{ uri: car1.image }} style={styles.carImage} />
+                            ) : (
+                                <Ionicons name="add" size={60} color="#ECAE36" />
+                            )}
+                        </View>
+                        <Text style={styles.boxText}>{car1 ? car1.model : 'Select Car 1'}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.box} onPress={() => handleSelectCar(2)}>
+                        <View style={styles.boxBorder}>
+                            {car2 ? (
+                                <Image source={{ uri: car2.image }} style={styles.carImage} />
+                            ) : (
+                                <Ionicons name="add" size={60} color="#ECAE36" />
+                            )}
+                        </View>
+                        <Text style={styles.boxText}>{car2 ? car2.model : 'Select Car 2'}</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity style={styles.compareButton} onPress={handleComparePress}>
+                    <Text style={styles.compareText}>Compare Cars</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </SafeAreaView>
+    );
 }
 
+// Styles...
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#1c1c1c',
-      padding: 20,
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#fff',
+      },
+      container: {
+        padding: 28,
+        flexGrow: 1,
+        justifyContent: 'flex-start',
+      },
+    header: {
+        flexDirection: 'column'
     },
-    title: {
-      fontSize: 28,
-      fontWeight: 'bold',
-      color: '#fff',
-      marginVertical: 20,
-      textAlign: 'center',
+    headerTitle: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 30
     },
-    carList: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
+    headerText: {
+        fontSize: 18,
+        textAlign: 'center',
     },
-    carCard: {
-      width: '48%',
-      backgroundColor: '#292929',
-      padding: 10,
-      borderRadius: 10,
-      alignItems: 'center',
-      marginBottom: 20,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 5,
-      elevation: 3,
+    comparingBox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+        marginTop: 60
+    },
+    box: {
+        alignItems: 'center',
+        marginHorizontal: 20,
+        alignContent: 'center',
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 1,
+        shadowRadius: 1.8,
+        borderRadius: 8,
+        width: 160,
+        height: 160
+    },
+    boxBorder: {
+        padding: 5,
+        borderStyle: 'dotted',
+        borderWidth: 1,
+        borderColor: '#ECAE36',
+        borderRadius: 8,
+        marginTop: 20,
+        marginBottom: 10
+    },
+    boxText:{
+        fontSize: 14
+    },
+    compareButton: {
+        marginTop: 30,  
+        backgroundColor: '#9B9B9B',
+        padding: 20,
+        borderRadius: 8
+    },
+    compareText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
     carImage: {
-      width: '100%',
-      height: 120,
-      marginBottom: 10,
-    },
-    carName: {
-      fontSize: 16,
-      fontWeight: '500',
-      color: '#fff',
-    },
-  });
+        resizeMode: 'contain',
+        width: '100%',
+        height: '85%',
+        padding: 30,
+        aspectRatio: 1.5,
+        borderRadius: 4
+    }
+
+})
